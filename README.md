@@ -1,23 +1,29 @@
 # Aeon Pipelines Neo4j Extension
 
-This extension allows you to analyze and execute Aeon-style topological pipelines directly inside a Neo4j database using Java-based Stored Procedures.
+Aeon Pipelines Neo4j is a Java stored-procedure extension for analyzing pipeline-shaped graphs inside Neo4j.
 
-## Features
-- **Topological Analysis**: Calculate Betti numbers ($\beta_1$) and Buley metrics directly on graph nodes/relationships.
-- **Cypher Integration**: Use standard Cypher to define pipelines and then call Aeon procedures to validate or analyze them.
+The fair brag is that it gives you a direct bridge between graph data you already have in Neo4j and the topological analysis surface from Aeon Pipelines. You do not need to export the graph first just to inspect it.
+
+## What It Helps You Do
+
+- analyze pipeline structures stored in Neo4j,
+- calculate values such as `beta1` and the Buley measure,
+- and call those procedures from normal Cypher queries.
 
 ## Installation
+
 1. Build the JAR:
-   ```bash
-   mvn clean package
-   ```
-2. Copy the resulting JAR from `target/aeon-pipelines-neo4j-1.0.0-SNAPSHOT.jar` to your Neo4j `plugins/` directory.
+
+```bash
+mvn clean package
+```
+
+2. Copy the resulting JAR from `target/aeon-pipelines-neo4j-1.0.0-SNAPSHOT.jar` into your Neo4j `plugins/` directory.
 3. Restart Neo4j.
 
 ## Usage
 
-### 1. Analyze a Pipeline Structure
-Once you have a graph of nodes connected by `FLOWS_TO` relationships, you can analyze its complexity:
+### Analyze A Pipeline
 
 ```cypher
 MATCH (source:ComputationNode {id: 'start-node'})
@@ -26,8 +32,7 @@ YIELD beta1, buleyMeasure, nodeCount, edgeCount
 RETURN beta1, buleyMeasure;
 ```
 
-### 2. Find High-Complexity "Hotspots"
-Find nodes that serve as the root of high-entropy topological superpositions:
+### Find More Complex Areas
 
 ```cypher
 MATCH (n:ComputationNode)
@@ -38,9 +43,15 @@ RETURN n.id, beta1, buleyMeasure
 ORDER BY buleyMeasure DESC;
 ```
 
-## Mapping Primitives to Cypher
-When expressing pipelines in Neo4j, use these relationship types:
-- `FORK`: Multiple outgoing relationships from one node.
-- `RACE`: Multiple outgoing relationships to a `RACE` node.
-- `FOLD`: Multiple incoming relationships to one node.
-- `FLOWS_TO`: Standard sequential transition.
+## Relationship Mapping
+
+When expressing pipelines in Neo4j, the README assumes these relationship shapes:
+
+- `FORK`: one node branching to several others
+- `RACE`: several branches feeding a race node
+- `FOLD`: several branches merging into one node
+- `FLOWS_TO`: normal sequential movement
+
+## Why This README Is Grounded
+
+This is a small extension with a clear job. The strongest fair brag is that it lets Neo4j users run Aeon-style pipeline analysis where their graph already lives.
