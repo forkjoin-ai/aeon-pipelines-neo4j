@@ -1,0 +1,67 @@
+{
+  "name": "open-source-aeon-pipelines-neo4j",
+  "projectType": "library",
+  "sourceRoot": "open-source/aeon-pipelines-neo4j/src",
+  "tags": [
+    "scope:open-source",
+    "type:lib"
+  ],
+  "targets": {
+    "build": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs build open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "lint": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs lint open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "test": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs test open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "typecheck": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs typecheck open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "github:push": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs github-push open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "forge:push": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs forge-push open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "push": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs push open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    },
+    "submodule:update-reference": {
+      "executor": "a0:run-commands",
+      "options": {
+        "command": "node scripts/open-source-repo-target.mjs submodule-update-reference open-source/aeon-pipelines-neo4j",
+        "cwd": "."
+      }
+    }
+  }
+}
