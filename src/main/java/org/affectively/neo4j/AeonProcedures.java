@@ -1,6 +1,7 @@
 package org.affectively.neo4j;
 
 import org.neo4j.graphdb.*;
+import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
 import java.util.*;
@@ -49,7 +50,7 @@ public class AeonProcedures {
 
         Set<Node> nodes = new HashSet<>();
         Set<Relationship> edges = new HashSet<>();
-        
+
         // Traverse the graph to find all reachable nodes and edges
         Queue<Node> queue = new LinkedList<>();
         queue.add(startNode);
@@ -59,7 +60,7 @@ public class AeonProcedures {
 
         while (!queue.isEmpty()) {
             Node current = queue.poll();
-            for (Relationship rel : current.getRelationships(type, Direction.OUTGOING)) {
+            for (Relationship rel : current.getRelationships(Direction.OUTGOING, type)) {
                 edges.add(rel);
                 Node next = rel.getEndNode();
                 if (nodes.add(next)) {
@@ -70,7 +71,7 @@ public class AeonProcedures {
 
         long n = nodes.size();
         long e = edges.size();
-        
+
         // Simplified Betti calculation for Neo4j context
         // beta0 = connected components (assumed 1 for this traversal)
         long beta0 = 1;
