@@ -8,6 +8,7 @@
   ],
   "targets": {
     "build": {
+      "dependsOn": [],
       "executor": "a0:run-commands",
       "options": {
         "command": "node scripts/open-source-repo-target.mjs build open-source/aeon-pipelines-neo4j",
