@@ -55,3 +55,9 @@ When expressing pipelines in Neo4j, the README assumes these relationship shapes
 ## Why This README Is Grounded
 
 This is a small extension with a clear job. The strongest fair brag is that it lets Neo4j users run Aeon-style pipeline analysis where their graph already lives.
+
+## Jet-Engine Compressor Cascade
+
+This surface is an OSI **L7 (application)** procedure: `aeon.pipeline.analyze` is invoked from Cypher and returns topological measures over a graph traversal. It has no honest multiplicative compressor-cascade stage of its own (a single read-only BFS plus a Betti/Buley formula — no codec, caching/skip, quantization, fan-out, batching, parallel speedup, or dedup with a real bytes-in/out or speedup ratio), so no cascade stage is declared here.
+
+When a stage becomes real (e.g. a result cache returning a skip-ratio, or batched multi-source analysis with a fan-out count), declare it with the shared primitive — TS: `open-source/aether/src/wasm-simd/compressor-cascade.ts`; Rust: `open-source/gnosis/gnosis-engine-core`. The law (overall ratio = product of per-stage ratios) is the OSI keystone `Gnosis.OSICompressorCascade.osi_is_the_jet_compressor` (overall 510510), proven axiom-clean via `Gnosis.MathJetEngine.overallRatio_append`.
