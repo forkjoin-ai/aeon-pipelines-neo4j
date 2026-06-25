@@ -1,0 +1,96 @@
+name = "aeon-pipelines-neo4j-site"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+[site]
+kit = "oss-template"
+title = "aeon-pipelines-neo4j — Aeon pipeline analysis inside Neo4j"
+
+[site.project]
+name = "Aeon Pipelines Neo4j"
+tagline = "Run Aeon-style pipeline topology analysis where your graph already lives."
+description = "A Java stored-procedure extension for analyzing pipeline-shaped graphs inside Neo4j. It bridges graph data you already hold in Neo4j to the topological analysis surface from Aeon Pipelines — no export step required."
+logo = "diamond"
+accent = "#018bff"
+theme = "dark"
+repo = "forkjoin-ai/aeon-pipelines-neo4j"
+
+[site.sigil]
+seed = "aeon-pipelines-neo4j"
+motion = "drift"
+coherence = "ring"
+frame = "hexagon"
+
+[site.nav]
+links = ["Features|#features", "Quickstart|#quickstart", "FAQ|#faq", "Source|https://forgo.cloud/forkjoin-ai/aeon-pipelines-neo4j"]
+
+[site.hero]
+eyebrow = "Neo4j plugin · Cypher-callable · topological measures"
+install = "mvn clean package"
+cta_primary = "Get started"
+cta_primary_href = "#quickstart"
+cta_secondary = "Browse the source"
+cta_secondary_href = "https://forgo.cloud/forkjoin-ai/aeon-pipelines-neo4j"
+
+[[site.features]]
+icon = "cpu"
+title = "Analyze in place"
+body = "Analyze pipeline structures stored in Neo4j directly. You don't need to export the graph first just to inspect it — the analysis runs where your graph already lives."
+
+[[site.features]]
+icon = "gauge"
+title = "Topological measures"
+body = "Calculate values such as beta1 and the Buley measure over a graph traversal, then sort and filter on them to find the more complex areas of a pipeline."
+
+[[site.features]]
+icon = "layers"
+title = "Cypher-native"
+body = "Call aeon.pipeline.analyze from normal Cypher queries with CALL ... YIELD, returning beta1, buleyMeasure, nodeCount, and edgeCount alongside the rest of your query."
+
+[[site.features]]
+icon = "branch"
+title = "Fork / race / fold shapes"
+body = "Express pipelines with relationship shapes the procedure understands: FORK (one node branching out), RACE (branches feeding a race node), FOLD (branches merging into one), and FLOWS_TO (normal sequential movement)."
+
+[site.quickstart]
+title = "Install and analyze"
+
+[[site.quickstart.tab]]
+label = "Install"
+code = "# 1. Build the JAR\nmvn clean package\n\n# 2. Copy into your Neo4j plugins/ directory\ncp target/aeon-pipelines-neo4j-1.0.0-SNAPSHOT.jar \\\n   $NEO4J_HOME/plugins/\n\n# 3. Restart Neo4j"
+
+[[site.quickstart.tab]]
+label = "Analyze"
+code = "MATCH (source:ComputationNode {id: 'start-node'})\nCALL aeon.pipeline.analyze(source, 'FLOWS_TO')\nYIELD beta1, buleyMeasure, nodeCount, edgeCount\nRETURN beta1, buleyMeasure;"
+
+[[site.quickstart.tab]]
+label = "Find hotspots"
+code = "MATCH (n:ComputationNode)\nCALL aeon.pipeline.analyze(n, 'FLOWS_TO')\nYIELD beta1, buleyMeasure\nWHERE beta1 > 5\nRETURN n.id, beta1, buleyMeasure\nORDER BY buleyMeasure DESC;"
+
+[[site.faq]]
+q = "What does the procedure return?"
+a = "aeon.pipeline.analyze yields beta1, buleyMeasure, nodeCount, and edgeCount for a traversal starting from a source node over a given relationship type."
+
+[[site.faq]]
+q = "Do I need to export my graph?"
+a = "No. The extension runs the analysis directly against the graph data you already have in Neo4j — that is the point of the bridge."
+
+[[site.faq]]
+q = "What relationship shapes does it expect?"
+a = "When expressing pipelines in Neo4j it assumes FORK (one node branching to several), RACE (several branches feeding a race node), FOLD (several branches merging into one), and FLOWS_TO (normal sequential movement)."
+
+[[site.faq]]
+q = "How do I install it?"
+a = "Build the JAR with mvn clean package, copy target/aeon-pipelines-neo4j-1.0.0-SNAPSHOT.jar into your Neo4j plugins/ directory, and restart Neo4j."
+
+[site.footer]
+quote = "A small extension with a clear job: run Aeon-style pipeline analysis where your graph already lives."
+copyright = "© 2026 forkjoin-ai · aeon-pipelines-neo4j contributors"
+
+[[site.footer.column]]
+title = "Project"
+links = ["Source|https://forgo.cloud/forkjoin-ai/aeon-pipelines-neo4j"]
+
+[[site.footer.column]]
+title = "Usage"
+links = ["Features|#features", "Quickstart|#quickstart", "FAQ|#faq"]
