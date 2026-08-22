@@ -1,5 +1,8 @@
 # Aeon Pipelines Neo4j Extension
 
+## Failure and risk boundaries
+Graph analysis reflects an indexed snapshot, not live execution or causal dependency. Missing credentials, stale indexes, partial writes, and limits can yield incomplete results; complexity scores are heuristics.
+
 Aeon Pipelines Neo4j is a Java stored-procedure extension for analyzing pipeline-shaped graphs inside Neo4j.
 
 The fair brag is that it gives you a direct bridge between graph data you already have in Neo4j and the topological analysis surface from Aeon Pipelines. You do not need to export the graph first just to inspect it.
